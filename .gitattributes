@@ -1,1 +1,1 @@
-distilBERT/** filter=lfs diff=lfs merge=lfs -text
+distilBERT/* filter=lfs diff=lfs merge=lfs -text
