@@ -135,7 +135,7 @@ def scrape_article(request: ArticleRequests):
         html_content = response.text
         
         article = Article(url)
-        article.download(input_html=html_content)
+        article.set_html(html_content)
         article.parse()
 
         text = article.text
