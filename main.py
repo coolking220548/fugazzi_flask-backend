@@ -70,7 +70,7 @@ def predict(request: NewsItem):
     print(response['ai_overview'])
     reasoning = summarize_text(response['ai_overview'])
     if verdict == "False" and not any(kw in response['ai_overview'].lower() for kw in ["because", "according", "here's why"]):
-        reasoning = f"The claim seems false due to lack of verified PNG sources. Details: {reasoning}"
+        reasoning = f"The claim seems false due to lack of verified PNG sources.\nDetails: {reasoning}"
 
     sources = response.get("results", [])
     contradiction_notes = []
@@ -126,6 +126,7 @@ def scrape_article(request: ArticleRequests):
                         "(KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36",
             "Accept-Language": "en-US,en;q=0.9"
         }
+        print(url)
         response = requests.get(url, headers=headers)
         
         if response.status_code != 200:
@@ -137,7 +138,9 @@ def scrape_article(request: ArticleRequests):
         article.download(input_html=html_content)
         article.parse()
 
-        text = summarize_text(article.text)
+        text = article.text
+        text = summarize_text(text)
+
         return {"text": text}
 
 
