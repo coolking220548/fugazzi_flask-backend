@@ -122,9 +122,10 @@ def scrape_article(request: ArticleRequests):
         return {"text": text}
     else:
         headers = {
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
-                        "(KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36",
-            "Accept-Language": "en-US,en;q=0.9"
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:123.0) Gecko/20100101 Firefox/123.0",
+            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+            "Accept-Language": "en-US,en;q=0.9",
+            "Referer": "https://google.com"
         }
         print(url)
         response = requests.get(url, headers=headers)
@@ -133,6 +134,7 @@ def scrape_article(request: ArticleRequests):
             return {"error": f"Failed to fetch the page: {response.status_code}"}
         
         html_content = response.text
+        print("Fetched HTML length:", len(html_content))
         
         article = Article(url)
         article.set_html(html_content)
