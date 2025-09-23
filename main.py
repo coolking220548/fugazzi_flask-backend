@@ -161,7 +161,7 @@ def extract_text(request: TextExtraction):
             temp_image.write(image_bytes)
             temp_image_path = temp_image.name
 
-        pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
+        # pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe" # For local development only
         text = pytesseract.image_to_string(Image.open(temp_image_path))
 
         os.remove(temp_image_path)
