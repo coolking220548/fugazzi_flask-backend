@@ -9,6 +9,8 @@ import os, requests, joblib, base64, tempfile, json, pytesseract
 
 app = FastAPI()
 
+port = int(os.environ.get("PORT", 8000))
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -248,3 +250,8 @@ def image_predict(request: ImageAuthentication):
         return {"error": f'Invalid base64 or some error with file handling: {str(e)}'}
 
     return {"result": result}
+
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run("main:app", host="0.0.0.0", port=port)
